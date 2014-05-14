@@ -40,14 +40,6 @@ You can clone it wherever you like, but for this example I'm putting it in ~/hac
     cd ~
     git clone https://github.com/hhvm/hack-example-site.git
     
-#### Install dependencies ####
-The Hack Example Site uses [Composer](https://getcomposer.org) to manage its dependencies. Composer is easy to install and easy to use. To install Composer, you just curl the installation script. To install the dependencies you just run the `install` command. For more information about this step, see the Composer [getting started guide](https://getcomposer.org/doc/00-intro.md#installation-nix).
-
-    cd hack-example-site
-    sudo apt-get install curl
-    curl -sS https://getcomposer.org/installer | php
-    php composer.phar install
-    
 #### Install Nginx
 
     sudo apt-get install nginx
@@ -59,6 +51,14 @@ The Hack Example Site uses [Composer](https://getcomposer.org) to manage its dep
     echo deb http://dl.hhvm.com/ubuntu saucy main | sudo tee /etc/apt/sources.list.d/hhvm.list 
     sudo apt-get update
     sudo apt-get install hhvm
+
+#### Install dependencies ####
+The Hack Example Site uses [Composer](https://getcomposer.org) to manage its dependencies. Composer is easy to install and easy to use. To install Composer, you just curl the installation script and pipe into `php` (the `hhvm` executable cannot read a script from `STDIN` currently). To install the dependencies you just run the `install` command; we are invoking the downloaded `composer.phar` using `hhvm` to make sure the engine dependency in `composer.json` is satisfied. For more information about this step, see the Composer [getting started guide](https://getcomposer.org/doc/00-intro.md#installation-nix).
+
+    cd hack-example-site
+    sudo apt-get install curl
+    curl -sS https://getcomposer.org/installer | php
+    hhvm composer.phar install
 
 #### Copy the HHVM config file
 There is a simple HHVM config in this repo, which you can use. I just overwrite the server.hdf file, since that's the config that init.d uses. You can always edit the service or start hhvm yourself if you'd rather not overwrite server.hdf
