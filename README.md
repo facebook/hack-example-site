@@ -94,20 +94,15 @@ Try going to `localhost` in your browser of choice
 
 If you don't already have a Heroku account, start here: https://id.heroku.com/signup
 
-#### Clone the repo and check out the `heroku` branch
+#### Create a Heroku app, push the code, and open the app in your browser
 
-    git clone https://github.com/pvh/hack-example-site.git
-    cd hack-example-site
-
-#### Add a "Procfile" which tells Heroku to start your app using HHVM
-
-    echo 'web: vendor/bin/heroku-hhvm-nginx' > Procfile
-    git add .
-    git commit -am "add a Procfile so that foreman/heroku know how to start the app"
-
-#### Create a heroku app and push the code
-
-    heroku create --buildpack https://github.com/dzuelke/heroku-buildpack-php#hhvm
+    heroku create
     git push heroku master
     heroku open
 
+#### Optionally, add a "Procfile" telling Heroku to start your app using Nginx instead of the default Apache
+
+    echo 'web: vendor/bin/heroku-hhvm-nginx' > Procfile # could also be heroku-hhvm-apache2 instead
+    git add Procfile
+    git commit -m "use Nginx on Heroku"
+    git push heroku master
